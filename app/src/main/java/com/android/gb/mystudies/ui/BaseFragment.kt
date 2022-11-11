@@ -11,9 +11,10 @@ import com.android.gb.mystudies.adapter.CLASSES_PAGE_INDEX
 import com.android.gb.mystudies.adapter.HOME_PAGE_INDEX
 import com.android.gb.mystudies.adapter.PageAdapter
 import com.android.gb.mystudies.databinding.FragmentBaseBinding
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class BaseFragment : Fragment(){
+class BaseFragment : Fragment() {
 
     private lateinit var viewPager: ViewPager2
     private var _binding: FragmentBaseBinding? = null
@@ -32,8 +33,27 @@ class BaseFragment : Fragment(){
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.setIcon(getTabIcon(position))
-            tab.text = getTabTitle(position)
+            if (position == HOME_PAGE_INDEX) {
+                tab.text = getTabTitle(position)
+            }
         }.attach()
+        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    HOME_PAGE_INDEX -> tab.text = getString(R.string.home_title)
+                    CLASSES_PAGE_INDEX -> tab.text = getString(R.string.classes_title)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                tab.text = ""
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })
+
         return binding.root
     }
 
@@ -47,7 +67,7 @@ class BaseFragment : Fragment(){
 
     private fun getTabTitle(position: Int): String? {
         return when (position) {
-            HOME_PAGE_INDEX ->  getString(R.string.home_title)
+            HOME_PAGE_INDEX -> getString(R.string.home_title)
             CLASSES_PAGE_INDEX -> getString(R.string.classes_title)
             else -> null
         }
