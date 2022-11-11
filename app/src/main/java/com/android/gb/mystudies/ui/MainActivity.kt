@@ -1,7 +1,8 @@
-package com.android.gb.mystudies
+package com.android.gb.mystudies.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.android.gb.mystudies.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
