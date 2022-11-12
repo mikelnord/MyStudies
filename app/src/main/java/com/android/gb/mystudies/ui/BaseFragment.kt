@@ -30,6 +30,7 @@ class BaseFragment : Fragment() {
         viewPager = binding.viewPager
 
         viewPager.adapter = PageAdapter(this)
+        viewPager.isUserInputEnabled = false
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.setIcon(getTabIcon(position))

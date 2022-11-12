@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.gb.mystudies.adapter.LessonTodayAdapter
 import com.android.gb.mystudies.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +16,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    val viewModel: ViewModelHome by viewModels()
+    private val viewModel: ViewModelHome by viewModels()
 
 
     override fun onCreateView(
@@ -29,10 +30,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupUI() {
+        val adapter = LessonTodayAdapter()
+        binding.recyclerViewClasses.adapter = adapter
+        binding.recyclerViewClasses.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         viewModel.countdown_timer.start()
-        viewModel.times.observe(viewLifecycleOwner, Observer {
-            binding.textTimerEx.text=it
-        })
+        viewModel.times.observe(viewLifecycleOwner) {
+            binding.textTimerEx.text = it
+        }
+        viewModel.lessonsToDay.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
 
     }
 

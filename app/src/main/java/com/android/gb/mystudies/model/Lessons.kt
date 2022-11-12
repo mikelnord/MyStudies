@@ -1,12 +1,13 @@
 package com.android.gb.mystudies.model
 
 import java.time.LocalDateTime
-import java.util.*
 
 data class Lessons(
+    val id:Int,
     val name: String,
-    val dateStart: Date,
-    val dateEnd: Date
+    val dateStart: String,
+    val dateEnd: String,
+    val isOnline:Boolean
 )
 
 data class Exam(
